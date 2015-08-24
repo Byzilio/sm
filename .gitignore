@@ -3,7 +3,6 @@
 *.class
 *.war
 *.ear
-*.classpath
 hs_err_pid*
 
 ## GWT

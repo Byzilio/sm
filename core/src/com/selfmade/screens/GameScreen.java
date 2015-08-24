@@ -18,6 +18,7 @@ public class GameScreen implements Screen{
 		gameWorld = new GameWorld(level);
 		gameRender = new GameRender(gameWorld);
 		batch = new SpriteBatch(); 
+		Gdx.input.setInputProcessor(new InputHandler(gameWorld));
 	}
 	
 	@Override
