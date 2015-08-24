@@ -36,7 +36,9 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		for(int i = 0;i<gameWorld.sizeInput();i++){
+			if ( ((Integer)gameWorld.getInput(i).getX()==screenX) && ((Integer)gameWorld.getInput(i).getY()==screenY) ) gameWorld.removeInput(i);
+		}
 		return false;
 	}
 

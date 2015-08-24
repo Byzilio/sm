@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.selfmade.game.GameRender;
 import com.selfmade.game.GameWorld;
+import com.selfmade.game.InputHandler;
 import com.selfmade.levels.TestLevel;
 
 public class GameScreen implements Screen{
