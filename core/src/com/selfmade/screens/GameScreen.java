@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.selfmade.game.GameRender;
 import com.selfmade.game.GameWorld;
+import com.selfmade.game.InputHandler;
 import com.selfmade.levels.TestLevel;
 
 public class GameScreen implements Screen{
@@ -17,6 +18,7 @@ public class GameScreen implements Screen{
 		gameWorld = new GameWorld(level);
 		gameRender = new GameRender(gameWorld);
 		batch = new SpriteBatch(); 
+		Gdx.input.setInputProcessor(new InputHandler(gameWorld));
 	}
 	
 	@Override
