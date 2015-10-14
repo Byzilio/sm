@@ -11,7 +11,7 @@ public class TestLogLevel implements ILevel {
 	@Override
 	public List<IGameObject> getAllObjects() {
 		List<IGameObject> actors = new ArrayList<IGameObject>(); 
-		actors.add(new TestLogObject());
+		//actors.add(new TestLogObject());
 		return actors;
 	}
 

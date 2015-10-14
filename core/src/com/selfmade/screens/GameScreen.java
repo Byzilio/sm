@@ -3,9 +3,13 @@ package com.selfmade.screens;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.selfmade.camera.SimpleCamera;
 import com.selfmade.game.ILevel;
+import com.selfmade.helper.InputAction;
+import com.selfmade.helper.InputHandler;
+import com.selfmade.helper.Pair;
 import com.selfmade.objects.IGameObject;
 
 public class GameScreen implements Screen{
@@ -15,12 +19,16 @@ public class GameScreen implements Screen{
 	
 	float delta;
 	ArrayList<IGameObject> actors;
-	
+	ArrayList<InputAction> touchs;
+	InputHandler input;
 	SimpleCamera testCamera;
 	
 	public GameScreen(ILevel level,Game game){
 		this.level = level;
 		this.game = game;
+		input = new InputHandler();
+		Gdx.input.setInputProcessor(input);
+		touchs = new ArrayList<InputAction>();
 		testCamera = new SimpleCamera();
 		actors = (ArrayList<IGameObject>) level.getAllObjects();
 	}
@@ -34,6 +42,11 @@ public class GameScreen implements Screen{
 	}
 
 	public void update(){
+		touchs = input.getTouchs();
+		for(InputAction touch: touchs){
+			Gdx.app.log("Touch:", touch.toString());
+		}
+		
 		for(IGameObject actor: actors){
 			actor.update(this);
 		}
@@ -46,7 +59,6 @@ public class GameScreen implements Screen{
 	public void setLevel(ILevel level){
 		game.setScreen(new GameScreen(level,game));
 	}
-	
 	
 	
 	
