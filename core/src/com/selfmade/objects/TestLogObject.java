@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.selfmade.screens.GameScreen;
 
-public class TestLogObject extends IGameObject {
+public class TestLogObject extends AGameObject {
 
 	public TestLogObject(){
 		addInternal("test1");

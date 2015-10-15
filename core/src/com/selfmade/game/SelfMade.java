@@ -7,7 +7,7 @@ public class SelfMade extends Game {
 	
 	@Override
 	public void create () {
-		ILevel level = new TestLogLevel();
+		ALevel level = new TestLogLevel();
 		this.setScreen(new GameScreen(level,this));
 	}
 

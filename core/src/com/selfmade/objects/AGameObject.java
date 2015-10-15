@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.selfmade.screens.GameScreen;
 
-public abstract class IGameObject {
+public abstract class AGameObject {
 	int x,y;
 	ArrayList<String> internals = new ArrayList<>();
 	public abstract void update(GameScreen screen);

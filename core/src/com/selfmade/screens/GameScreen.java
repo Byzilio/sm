@@ -6,31 +6,31 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.selfmade.camera.SimpleCamera;
-import com.selfmade.game.ILevel;
+import com.selfmade.game.ALevel;
 import com.selfmade.helper.InputAction;
 import com.selfmade.helper.InputHandler;
 import com.selfmade.helper.Pair;
-import com.selfmade.objects.IGameObject;
+import com.selfmade.objects.AGameObject;
 
 public class GameScreen implements Screen{
 
 	Game game;
-	ILevel level;
+	ALevel level;
 	
 	float delta;
-	ArrayList<IGameObject> actors;
+	ArrayList<AGameObject> actors;
 	ArrayList<InputAction> touchs;
 	InputHandler input;
 	SimpleCamera testCamera;
 	
-	public GameScreen(ILevel level,Game game){
+	public GameScreen(ALevel level,Game game){
 		this.level = level;
 		this.game = game;
 		input = new InputHandler();
 		Gdx.input.setInputProcessor(input);
 		touchs = new ArrayList<InputAction>();
 		testCamera = new SimpleCamera();
-		actors = (ArrayList<IGameObject>) level.getAllObjects();
+		actors = (ArrayList<AGameObject>) level.getAllObjects();
 	}
 	
 	
@@ -47,7 +47,7 @@ public class GameScreen implements Screen{
 			Gdx.app.log("Touch:", touch.toString());
 		}
 		
-		for(IGameObject actor: actors){
+		for(AGameObject actor: actors){
 			actor.update(this);
 		}
 	}
@@ -56,7 +56,7 @@ public class GameScreen implements Screen{
 		return delta;
 	}
 	
-	public void setLevel(ILevel level){
+	public void setLevel(ALevel level){
 		game.setScreen(new GameScreen(level,game));
 	}
 	
