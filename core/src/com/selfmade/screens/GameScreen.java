@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.selfmade.camera.SimpleCamera;
+import com.selfmade.camera.Camera;
 import com.selfmade.game.ALevel;
 import com.selfmade.helper.InputAction;
 import com.selfmade.helper.InputHandler;
-import com.selfmade.helper.Pair;
 import com.selfmade.objects.AGameObject;
 
 public class GameScreen implements Screen{
@@ -21,15 +20,17 @@ public class GameScreen implements Screen{
 	ArrayList<AGameObject> actors;
 	ArrayList<InputAction> touchs;
 	InputHandler input;
-	SimpleCamera testCamera;
+	Camera camera;
 	
 	public GameScreen(ALevel level,Game game){
 		this.level = level;
 		this.game = game;
-		input = new InputHandler();
+		camera = new Camera();
+		input = new InputHandler(camera);
 		Gdx.input.setInputProcessor(input);
 		touchs = new ArrayList<InputAction>();
-		testCamera = new SimpleCamera();
+		
+		camera.setPosition(900, 900);
 		actors = (ArrayList<AGameObject>) level.getAllObjects();
 	}
 	
@@ -38,7 +39,7 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		this.delta = delta;
 		update();
-		testCamera.draw(actors);
+		camera.draw(actors);
 	}
 
 	public void update(){

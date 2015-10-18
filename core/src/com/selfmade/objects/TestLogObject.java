@@ -10,6 +10,11 @@ public class TestLogObject extends AGameObject {
 	public TestLogObject(){
 		addInternal("test1");
 	}
+	public TestLogObject(int x,int y){
+		addInternal("test1");
+		this.x = x;
+		this.y = y;
+	}
 	
 	public void update(GameScreen screen) {
 		Gdx.app.log("TestObject", "Update");

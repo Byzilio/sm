@@ -1,13 +1,17 @@
 package com.selfmade.helper;
 
+import com.selfmade.camera.Camera;
+
 public class InputAction {
 	int screenX, screenY, pointer, button;
 	int keycode;
-	public InputAction(int screenX, int screenY, int pointer, int button){
-		this.screenX = screenX;
-		this.screenY = screenY;
+	Camera camera;
+	public InputAction(int screenX, int screenY, int pointer, int button, Camera camera){
+		this.screenX = screenX + camera.getX();
+		this.screenY = screenY + camera.getY();
 		this.pointer = pointer;
 		this.button = button;
+		this.camera = camera;
 		keycode = -1;
 	}
 	
@@ -35,8 +39,8 @@ public class InputAction {
 		return keycode;
 	}
 	protected void setCoordinates(int screenX, int screenY){
-		this.screenX = screenX;
-		this.screenY = screenY;
+		this.screenX = screenX + camera.getX();
+		this.screenY = screenY + camera.getY();
 	}
 	public String toString(){
 		if (keycode == -1) return "Touch"+pointer+":x="+screenX+" y="+screenY+" button="+button;

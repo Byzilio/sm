@@ -3,14 +3,17 @@ package com.selfmade.helper;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.InputProcessor;
+import com.selfmade.camera.Camera;
 
 
 public class InputHandler implements InputProcessor{
 
 	private ArrayList<InputAction> points;
 	
+	Camera camera;
 	
-	public InputHandler(){
+	public InputHandler(Camera camera){
+		this.camera = camera;
 		points = new ArrayList<InputAction>();
 	}
 	
@@ -43,7 +46,7 @@ public class InputHandler implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		points.add(new InputAction(screenX,screenY,pointer,button));
+		points.add(new InputAction(screenX,screenY,pointer,button,camera));
 		return false;
 	}
 
