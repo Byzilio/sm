@@ -18,19 +18,20 @@ public class GameScreen implements Screen{
 	
 	float delta;
 	ArrayList<AGameObject> actors;
-	ArrayList<InputAction> touchs;
+	ArrayList<InputAction> touches;
 	InputHandler input;
 	Camera camera;
 	
 	public GameScreen(ALevel level,Game game){
+		Gdx.app.log("GameScreen", "Created");
 		this.level = level;
 		this.game = game;
 		camera = new Camera();
 		input = new InputHandler(camera);
 		Gdx.input.setInputProcessor(input);
-		touchs = new ArrayList<InputAction>();
+		touches = new ArrayList<InputAction>();
 		
-		camera.setPosition(900, 900);
+		camera.setPosition(2000, 2000);
 		actors = (ArrayList<AGameObject>) level.getAllObjects();
 	}
 	
@@ -43,8 +44,8 @@ public class GameScreen implements Screen{
 	}
 
 	public void update(){
-		touchs = input.getTouchs();
-		for(InputAction touch: touchs){
+		touches = input.getTouchs();
+		for(InputAction touch: touches){
 			Gdx.app.log("Touch:", touch.toString());
 		}
 		
@@ -61,7 +62,9 @@ public class GameScreen implements Screen{
 		game.setScreen(new GameScreen(level,game));
 	}
 	
-	
+	public ArrayList<InputAction> getTouchs(){
+		return touches;
+	}
 	
 	
 	

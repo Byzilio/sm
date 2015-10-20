@@ -1,5 +1,6 @@
 package com.selfmade.helper;
 
+import com.badlogic.gdx.Gdx;
 import com.selfmade.camera.Camera;
 
 public class InputAction {
@@ -8,11 +9,13 @@ public class InputAction {
 	Camera camera;
 	public InputAction(int screenX, int screenY, int pointer, int button, Camera camera){
 		this.screenX = screenX + camera.getX();
-		this.screenY = screenY + camera.getY();
+		this.screenY = (Gdx.graphics.getHeight() - screenY) + camera.getY();
 		this.pointer = pointer;
 		this.button = button;
 		this.camera = camera;
 		keycode = -1;
+		
+		Gdx.app.log("Input", screenX + " " + screenY + "     " + Gdx.graphics.getHeight());
 	}
 	
 	public InputAction(int keycode){

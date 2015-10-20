@@ -2,6 +2,9 @@ package com.selfmade.camera;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.selfmade.objects.AGameObject;
 
@@ -29,8 +32,11 @@ public class Camera {
 	
 	public void draw(List<AGameObject> actors){
 		batch.begin();
+		Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f, 1f);
+		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		for(AGameObject actor : actors){
-			actor.draw(actor.getX()-x, actor.getY()-y, scale, batch);
+			actor.draw(actor.getX()-x,actor.getY()-y, scale, batch);
+		
 		}
 		batch.end();
 	}
