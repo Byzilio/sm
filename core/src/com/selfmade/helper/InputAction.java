@@ -1,14 +1,22 @@
 package com.selfmade.helper;
 
+import com.badlogic.gdx.Gdx;
+import com.selfmade.camera.Camera;
+
 public class InputAction {
 	int screenX, screenY, pointer, button;
 	int keycode;
-	public InputAction(int screenX, int screenY, int pointer, int button){
-		this.screenX = screenX;
-		this.screenY = screenY;
+	Camera camera;
+	public InputAction(int screenX, int screenY, int pointer, int button, Camera camera){
+
+		this.screenX = (int) ( ( (double)screenX + (double)camera.getX() ) );
+		this.screenY = (int) ( (((double)Gdx.graphics.getHeight() - (double)screenY) + (double)camera.getY()) );
 		this.pointer = pointer;
 		this.button = button;
+		this.camera = camera;
 		keycode = -1;
+		Gdx.app.log(this.toString(), "x ="+getScreenX()+" y ="+getScreenY());
+		Gdx.app.log(this.toString(), "Scale ="+camera.getScale());
 	}
 	
 	public InputAction(int keycode){
@@ -35,8 +43,8 @@ public class InputAction {
 		return keycode;
 	}
 	protected void setCoordinates(int screenX, int screenY){
-		this.screenX = screenX;
-		this.screenY = screenY;
+		this.screenX = (int) ( ( (double)screenX + (double)camera.getX() ) );
+		this.screenY = (int) ( (((double)Gdx.graphics.getHeight() - (double)screenY) + (double)camera.getY()) );
 	}
 	public String toString(){
 		if (keycode == -1) return "Touch"+pointer+":x="+screenX+" y="+screenY+" button="+button;

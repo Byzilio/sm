@@ -1,37 +1,45 @@
 package com.selfmade.helper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.selfmade.camera.Camera;
 
 
 public class InputHandler implements InputProcessor{
 
-	private ArrayList<InputAction> points;
+	private HashMap<Integer,InputAction> inputActions;
+	private int lastIndex;
 	
+	Camera camera;
 	
-	public InputHandler(){
-		points = new ArrayList<InputAction>();
+	public InputHandler(Camera camera){
+		this.camera = camera;
+		lastIndex = 0;
+		inputActions = new HashMap<Integer,InputAction>();
 	}
 	
-	public ArrayList<InputAction> getTouchs(){
-		return (ArrayList<InputAction>) points.clone();
+	public HashMap<Integer,InputAction> getTouchs(){
+		return (HashMap<Integer, InputAction>) inputActions.clone();
 	}
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		points.add(new InputAction(keycode));
+		inputActions.put(keycode, new InputAction(keycode));
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		for (int i=0;i<points.size();i++){
-			if (points.get(i).getKeycode()==keycode) {
-				points.remove(i);
+		/*for (int i=0;i<inputActions.size();i++){
+			if (inputActions.get(i).getKeycode()==keycode) {
+				inputActions.remove(i);
 				return false;
 			}
-		}
+		}*/
+		inputActions.remove(keycode);
 		return false;
 	}
 
@@ -43,19 +51,21 @@ public class InputHandler implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		points.add(new InputAction(screenX,screenY,pointer,button));
+		inputActions.put(pointer,new InputAction(screenX,screenY,pointer,button,camera));
+		Gdx.app.log("touchDown", screenX+"   "+screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		points.remove(pointer);
+		inputActions.remove(pointer);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		points.get(pointer).setCoordinates(screenX, screenY);
+		if (inputActions.get(pointer) == null) return false;
+		inputActions.get(pointer).setCoordinates(screenX, screenY);
 		return false;
 	}
 

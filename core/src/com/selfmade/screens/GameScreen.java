@@ -1,36 +1,39 @@
 package com.selfmade.screens;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.selfmade.camera.SimpleCamera;
-import com.selfmade.game.ILevel;
+import com.selfmade.camera.Camera;
+import com.selfmade.game.ALevel;
+import com.selfmade.game.SimpleMenu;
 import com.selfmade.helper.InputAction;
 import com.selfmade.helper.InputHandler;
-import com.selfmade.helper.Pair;
-import com.selfmade.objects.IGameObject;
+import com.selfmade.objects.AGameObject;
 
 public class GameScreen implements Screen{
 
 	Game game;
-	ILevel level;
+	ALevel level;
 	
 	float delta;
-	ArrayList<IGameObject> actors;
-	ArrayList<InputAction> touchs;
+	ArrayList<AGameObject> actors;
+	HashMap<Integer,InputAction> inputActions;
 	InputHandler input;
-	SimpleCamera testCamera;
+	Camera camera;
 	
-	public GameScreen(ILevel level,Game game){
+	public GameScreen(ALevel level,Game game){
+		Gdx.app.log("GameScreen", "Created");
 		this.level = level;
 		this.game = game;
-		input = new InputHandler();
+		camera = new Camera();
+		input = new InputHandler(camera);
 		Gdx.input.setInputProcessor(input);
-		touchs = new ArrayList<InputAction>();
-		testCamera = new SimpleCamera();
-		actors = (ArrayList<IGameObject>) level.getAllObjects();
+		inputActions = new HashMap<Integer,InputAction>();
+		camera.setPosition(0, 0);
+		getActorsFromLevel();
 	}
 	
 	
@@ -38,17 +41,18 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		this.delta = delta;
 		update();
-		testCamera.draw(actors);
+		camera.draw(actors);
 	}
 
 	public void update(){
-		touchs = input.getTouchs();
-		for(InputAction touch: touchs){
+		inputActions = input.getTouchs();
+		/*for(InputAction touch: inputActions.values()){
 			Gdx.app.log("Touch:", touch.toString());
-		}
+		}*/
 		
-		for(IGameObject actor: actors){
-			actor.update(this);
+		
+		for(int i = 0;i < actors.size();i++){
+			actors.get(i).update(this);
 		}
 	}
 	
@@ -56,17 +60,41 @@ public class GameScreen implements Screen{
 		return delta;
 	}
 	
-	public void setLevel(ILevel level){
+	public void setLevel(ALevel level){
 		game.setScreen(new GameScreen(level,game));
 	}
 	
+	public HashMap<Integer,InputAction> getTouchs(){
+		return inputActions;
+	}
+	public ALevel getLevel(){
+		return level;
+	}
 	
+	public void getActorsFromLevel(){
+		actors = (ArrayList<AGameObject>) level.getAllObjects();
+	}
 	
+	@Override
+	public void resize(int width, int height) {
+		//camera.resize(width, height);
+	}
+
+	public void setScale(float d){
+		camera.setScale(d);
+	}
 	
+	public float getScale(){
+		return camera.getScale();
+	}
 	
+	public float getScaleX(){
+		return camera.getScaleX();
+	}
 	
-	
-	
+	public float getScaleY(){
+		return camera.getScaleY();
+	}
 	
 	
 	
@@ -77,12 +105,7 @@ public class GameScreen implements Screen{
 		
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
@@ -103,8 +126,11 @@ public class GameScreen implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		for(AGameObject actor: actors){
+			actor.dispose();
+		}
 	}
+
+
 
 }
